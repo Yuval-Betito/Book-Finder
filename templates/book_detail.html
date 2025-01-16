@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ book.title }} - Book Details</title>
+</head>
+<body>
+    <h1>{{ book.title }}</h1>
+
+    <!-- תמונת הספר -->
+    {% if book.cover_image_url %}
+        <img src="{{ book.cover_image_url }}" alt="{{ book.title }}" style="max-width: 300px; max-height: 400px;">
+    {% else %}
+        <p><em>No cover image available for this book.</em></p>
+    {% endif %}
+
+    <!-- פרטי הספר -->
+    <p><strong>Author:</strong> {{ book.author }}</p>
+    <p><strong>Description:</strong> {{ book.description }}</p>
+    <p><strong>Published Year:</strong> {{ book.published_year }}</p>
+    <p><strong>Language:</strong> {{ book.language }}</p>
+    <p><strong>Original Language:</strong> {{ book.original_language }}</p>
+    <p><strong>Genres:</strong>
+        {% for genre in book.genres.all %}
+            {{ genre.name }}{% if not forloop.last %}, {% endif %}
+        {% endfor %}
+    </p>
+
+    <!-- כפתורי מועדפים -->
+    {% if request.user.is_authenticated %}
+        {% if book.book_id in user_favorite_books %}
+            <a href="{% url 'remove_from_favorites' book.book_id %}">Remove from Favorites</a>
+        {% else %}
+            <a href="{% url 'add_to_favorites' book.book_id %}">Add to Favorites</a>
+        {% endif %}
+    {% endif %}
+
+    <!-- כפתור חזרה -->
+    <a href="{% url 'user_home' %}">Back to Home</a>
+</body>
+</html>

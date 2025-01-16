@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add a Book</title>
+</head>
+<body>
+    <h1>Add a New Book</h1>
+
+    <!-- טופס הוספת ספר -->
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Add Book</button>
+    </form>
+
+    <!-- כפתור חזרה -->
+    <a href="{% url 'user_home' %}">Back to Home</a>
+</body>
+</html>

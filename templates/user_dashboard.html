@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>הספרים המועדפים שלך</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="{% url 'user_home' %}">Home</a></li>
+                <li><a href="{% url 'logout' %}">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h2>הספרים המועדפים שלך</h2>
+        <ul>
+            {% for favorite in favorite_books %}
+                <li>
+                    <strong>{{ favorite.book.title }}</strong> מאת {{ favorite.book.author }}
+                    <br>
+                    נוסף בתאריך: {{ favorite.added_on|date:"d/m/Y H:i" }}
+                </li>
+            {% empty %}
+                <li>אין לך ספרים מועדפים כרגע.</li>
+            {% endfor %}
+        </ul>
+    </main>
+    <footer>
+        <p>&copy; 2025 My Website</p>
+    </footer>
+</body>
+</html>

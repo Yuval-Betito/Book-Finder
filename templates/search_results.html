@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search Books</title>
+</head>
+<body>
+    <h1>Search for Books</h1>
+
+    <!-- טופס חיפוש -->
+    <form method="get" action="{% url 'search_books' %}">
+        <input type="text" name="q" value="{{ query }}" placeholder="Search by title, author, or genre">
+        <button type="submit">Search</button>
+    </form>
+
+    <h2>Results:</h2>
+    {% if books %}
+        <ul>
+            {% for book in books %}
+                <li>
+                    <a href="{% url 'book_detail' book.book_id %}">{{ book.title }}</a>
+                    <br>
+                    <strong>Author:</strong> {{ book.author }}<br>
+                    <strong>Genres:</strong>
+                    {% for genre in book.genres.all %}
+                        {{ genre.name }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No books found matching your query.</p>
+    {% endif %}
+
+    <a href="/">Back to Welcome Page</a>
+</body>
+</html>
+

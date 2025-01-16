@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>הספרים המועדפים שלך</title>
+</head>
+<body>
+    <h1>הספרים המועדפים שלך</h1>
+    <ul>
+        {% for favorite in favorites %}
+            <li>
+                <strong>{{ favorite.book.title }}</strong> מאת {{ favorite.book.author }}
+                <br>
+                נוסף בתאריך: {{ favorite.added_on|date:"d/m/Y H:i" }}
+                <br>
+                <a href="{% url 'remove_from_favorites' favorite.book.book_id %}">הסר ממועדפים</a>
+            </li>
+        {% empty %}
+            <li>אין לך ספרים מועדפים כרגע.</li>
+        {% endfor %}
+    </ul>
+
+    <!-- כפתור חזרה לדף המשתמש -->
+    <a href="{% url 'user_home' %}" style="display: inline-block; margin-top: 20px; text-decoration: none; padding: 10px 20px; background-color: #007bff; color: white; border-radius: 5px;">חזרה לדף הבית</a>
+</body>
+</html>
+

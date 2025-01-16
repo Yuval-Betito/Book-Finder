@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Home</title>
+</head>
+<body>
+    <h1>Welcome to Homepage Users</h1>
+
+    <!-- טופס חיפוש -->
+    <form method="GET" action="{% url 'search_books' %}">
+        <label for="search-query">Search for a book:</label>
+        <input type="text" id="search-query" name="q" placeholder="Search for a book...">
+        <button type="submit">Search</button>
+    </form>
+
+    <!-- רשימת ספרים -->
+    <h2>Your Books:</h2>
+    {% if books %}
+        <ul>
+            {% for book in books %}
+                <li>
+                    <a href="{% url 'book_detail' book.book_id %}">{{ book.title }}</a>
+                    <br>
+                    <strong>Author:</strong> {{ book.author }}
+                    <br>
+                    <strong>Genres:</strong>
+                    {% for genre in book.genres.all %}
+                        {{ genre.name }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No books found.</p>
+    {% endif %}
+
+    <!-- כפתור גישה לספרים מועדפים -->
+    <a href="{% url 'user_favorites' %}">Go to Your Favorites Page</a> <!-- קישור לדף הספרים המועדפים -->
+
+    <!-- קישור להוספת ספר -->
+    <a href="{% url 'add_book' %}">Add a New Book</a>
+
+    <!-- כפתור חזרה -->
+    <a href="/">Back to Welcome Page</a>
+</body>
+</html>
+

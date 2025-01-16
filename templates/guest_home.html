@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Guest Home</title>
+</head>
+<body>
+    <h1>Welcome to Homepage Guests</h1>
+
+    <!-- טופס חיפוש -->
+    <form method="GET" action="{% url 'search_books' %}">
+        <input type="text" name="q" value="{{ query }}" placeholder="Search by title, author, or genre">
+        <button type="submit">Search</button>
+    </form>
+
+    <p>Browse our books, but log in to manage your favorites!</p>
+
+    <!-- רשימת ספרים -->
+    <h2>Books Available:</h2>
+    {% if books %}
+        <ul>
+            {% for book in books %}
+                <li>
+                    <a href="{% url 'book_detail' book.book_id %}">{{ book.title }}</a>
+                    <br>
+                    <strong>Author:</strong> {{ book.author }}
+                    <br>
+                    <strong>Genres:</strong>
+                    {% for genre in book.genres.all %}
+                        {{ genre.name }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No books available at the moment. Please check back later.</p>
+    {% endif %}
+
+    <a href="/">Back to Welcome Page</a>
+</body>
+</html>
