@@ -1,0 +1,92 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Book Finder{% endblock %}</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        header {
+            background: linear-gradient(to right, #d4fc79, #96e6a1);
+            padding: 15px 0;
+            text-align: center;
+            font-size: 1.5rem;
+            color: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        footer {
+            background: #f1f1f1;
+            padding: 10px 0;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #555;
+            border-top: 1px solid #ddd;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 10px 5px;
+            background-color: #a8d5e2;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+
+        .button:hover {
+            background-color: #88c4d9;
+        }
+
+        .welcome-section {
+            text-align: center;
+            padding: 60px 20px;
+            background: #ffe7e1;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .welcome-section h1 {
+            font-size: 2.5rem;
+            color: #6d6875;
+        }
+
+        .welcome-section p {
+            font-size: 1.2rem;
+            color: #495057;
+            margin: 20px 0;
+        }
+    </style>
+    {% block extra_css %}{% endblock %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <header>
+        Book Finder
+    </header>
+
+    <div class="container">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <footer>
+        &copy; 2025 Book Finder. All rights reserved.
+    </footer>
+</body>
+</html>

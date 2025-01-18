@@ -17,6 +17,7 @@ from django.db import IntegrityError
 from django.utils.timezone import now
 from datetime import timedelta
 
+
 def welcome(request):
     return render(request, 'welcome.html')
 
@@ -150,9 +151,6 @@ def guest_home(request):
 
 
 
-
-
-
 def book_detail(request, book_id):
     # שליפת הספר לפי book_id (לא id)
     book = get_object_or_404(Book, book_id=book_id)
@@ -168,7 +166,6 @@ def book_detail(request, book_id):
     })
 
 
-
 def search_books(request):
     query = request.GET.get('q', '').strip()
     if query:
@@ -182,7 +179,7 @@ def search_books(request):
     return render(request, 'search_results.html', {'books': books, 'query': query})
 
 
-from .forms import AddBookForm
+
 
 @login_required
 def add_book(request):
@@ -207,18 +204,16 @@ def user_favorites(request):
 
 @login_required
 def add_to_favorites(request, book_id):
-    # בדיקה שהספר קיים בטבלה books
     book = get_object_or_404(Book, book_id=book_id)
 
     try:
-        # הוספה למועדפים
         favorite, created = FavoriteBook.objects.get_or_create(user=request.user, book=book)
         if created:
             print("Book added to favorites.")
         else:
             print("Book is already in favorites.")
     except IntegrityError as e:
-        print(f"Error adding book to favorites: {e}")  # טיפול במקרה של שגיאה
+        print(f"Error adding book to favorites: {e}")
 
     return redirect('book_detail', book_id=book_id)
 

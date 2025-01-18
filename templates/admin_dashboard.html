@@ -1,22 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
-</head>
-<body>
-    <h1>Admin Dashboard</h1>
-    <p>Welcome to the admin dashboard!</p>
+{% extends 'base.html' %}
 
-    <!-- קישור לניהול משתמשים -->
-    <a href="{% url 'manage_users' %}">Manage Users</a><br>
+{% block title %}Admin Dashboard{% endblock %}
 
-    <!-- קישור לדוחות -->
-    <a href="{% url 'admin_reports' %}">View Reports</a><br>
+{% block content %}
+<h1>Admin Dashboard</h1>
+<p>Welcome to the admin dashboard!</p>
 
-    <!-- קישור לדף הבית -->
-    <a href="{% url 'user_home' %}">Home</a>
-</body>
-</html>
+<!-- קישור לניהול משתמשים -->
+<a href="{% url 'manage_users' %}" class="button">Manage Users</a><br>
 
+<!-- קישור לדוחות -->
+<a href="{% url 'admin_reports' %}" class="button">View Reports</a><br>
+
+<!-- קישור לדף הבית -->
+<a href="{% url 'user_home' %}" class="button">Home</a>
+{% endblock %}

@@ -1,18 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Reports</title>
-</head>
-<body>
-    <h1>Admin Reports</h1>
+{% extends 'base.html' %}
 
+{% block title %}Admin Reports{% endblock %}
+
+{% block content %}
+<h1>Admin Reports</h1>
+
+<div class="report-section">
     <p><strong>New Users Today:</strong> {{ new_users_today }}</p>
     <p><strong>New Books Today:</strong> {{ new_books_today }}</p>
     <p><strong>Total Users:</strong> {{ total_users }}</p>
     <p><strong>Total Books:</strong> {{ total_books }}</p>
+</div>
 
-    <a href="{% url 'admin_dashboard' %}">Back to Dashboard</a>
-</body>
-</html>
+<a href="{% url 'admin_dashboard' %}" class="button">Back to Dashboard</a>
+{% endblock %}

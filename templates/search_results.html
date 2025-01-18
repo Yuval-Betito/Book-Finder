@@ -1,9 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Search Books</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block title %}Search Books{% endblock %}
+
+{% block content %}
     <h1>Search for Books</h1>
 
     <!-- טופס חיפוש -->
@@ -32,6 +31,6 @@
     {% endif %}
 
     <a href="/">Back to Welcome Page</a>
-</body>
-</html>
+{% endblock %}
+
 

@@ -1,11 +1,12 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Manage Users</title>
-</head>
-<body>
-    <h1>Manage Users</h1>
-    <table border="1">
+{% extends 'base.html' %}
+
+{% block title %}Manage Users{% endblock %}
+
+{% block content %}
+<h1>Manage Users</h1>
+
+<div class="table-container">
+    <table class="styled-table">
         <thead>
             <tr>
                 <th>Username</th>
@@ -19,16 +20,19 @@
                 <td>{{ user.username }}</td>
                 <td>{{ user.email }}</td>
                 <td>
-                    <form method="POST" action="{% url 'manage_users' %}">
+                    <form method="POST" action="{% url 'manage_users' %}" class="delete-form">
                         {% csrf_token %}
                         <input type="hidden" name="user_id" value="{{ user.id }}">
-                        <button type="submit">Delete</button>
+                        <button type="submit" class="button delete-button">Delete</button>
                     </form>
                 </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
-    <a href="{% url 'admin_dashboard' %}">Back to Dashboard</a>
-</body>
-</html>
+</div>
+
+<div class="links">
+    <a href="{% url 'admin_dashboard' %}" class="button">Back to Dashboard</a>
+</div>
+{% endblock %}

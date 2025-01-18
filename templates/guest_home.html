@@ -1,26 +1,27 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Guest Home</title>
-</head>
-<body>
-    <h1>Welcome to Homepage Guests</h1>
+{% extends 'base.html' %}
+
+{% block title %}Guest Home{% endblock %}
+
+{% block content %}
+<div class="welcome-section">
+    <h1>Welcome to Homepage </h1>
 
     <!-- טופס חיפוש -->
-    <form method="GET" action="{% url 'search_books' %}">
-        <input type="text" name="q" value="{{ query }}" placeholder="Search by title, author, or genre">
-        <button type="submit">Search</button>
+    <form method="GET" action="{% url 'search_books' %}" class="search-form">
+        <label for="search-query" class="search-label">Search for a book:</label>
+        <input type="text" id="search-query" name="q" value="{{ query }}" placeholder="Search by title, author, or genre" class="search-input">
+        <button type="submit" class="button">Search</button>
     </form>
 
-    <p>Browse our books, but log in to manage your favorites!</p>
+    <p class="info-text">Browse our books, but log in to manage your favorites!</p>
 
     <!-- רשימת ספרים -->
-    <h2>Books Available:</h2>
+    <h2 class="section-title">Books Available:</h2>
     {% if books %}
-        <ul>
+        <ul class="book-list">
             {% for book in books %}
-                <li>
-                    <a href="{% url 'book_detail' book.book_id %}">{{ book.title }}</a>
+                <li class="book-item">
+                    <a href="{% url 'book_detail' book.book_id %}" class="book-title">{{ book.title }}</a>
                     <br>
                     <strong>Author:</strong> {{ book.author }}
                     <br>
@@ -32,9 +33,10 @@
             {% endfor %}
         </ul>
     {% else %}
-        <p>No books available at the moment. Please check back later.</p>
+        <p class="no-books">No books available at the moment. Please check back later.</p>
     {% endif %}
 
-    <a href="/">Back to Welcome Page</a>
-</body>
-</html>
+    <a href="/" class="button">Back to Welcome Page</a>
+</div>
+{% endblock %}
+

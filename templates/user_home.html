@@ -1,16 +1,15 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>User Home</title>
-</head>
-<body>
-    <h1>Welcome to Homepage Users</h1>
+{% extends 'base.html' %}
+
+{% block title %}User Home{% endblock %}
+
+{% block content %}
+    <h1>Welcome to Homepage</h1>
 
     <!-- טופס חיפוש -->
     <form method="GET" action="{% url 'search_books' %}">
         <label for="search-query">Search for a book:</label>
         <input type="text" id="search-query" name="q" placeholder="Search for a book...">
-        <button type="submit">Search</button>
+        <button type="submit" class="button">Search</button>
     </form>
 
     <!-- רשימת ספרים -->
@@ -35,16 +34,18 @@
     {% endif %}
 
     <!-- כפתור גישה לספרים מועדפים -->
-    <a href="{% url 'user_favorites' %}">Go to Your Favorites Page</a> <!-- קישור לדף הספרים המועדפים -->
-     <!-- כפתור גישה לדשבורד המנהלים -->
+    <a href="{% url 'user_favorites' %}" class="button">Go to Your Favorites Page</a>
+
+    <!-- כפתור גישה לדשבורד המנהלים -->
     {% if user.is_staff %}
-        <a href="{% url 'admin_dashboard' %}">Go to Admin Dashboard</a>
+        <a href="{% url 'admin_dashboard' %}" class="button">Go to Admin Dashboard</a>
     {% endif %}
-    <!-- קישור להוספת ספר -->
-    <a href="{% url 'add_book' %}">Add a New Book</a>
+
+    <!-- כפתור להוספת ספר -->
+    <a href="{% url 'add_book' %}" class="button">Add a New Book</a>
 
     <!-- כפתור חזרה -->
-    <a href="/">Back to Welcome Page</a>
-</body>
-</html>
+    <a href="/" class="button">Back to Welcome Page</a>
+{% endblock %}
+
 

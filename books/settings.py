@@ -135,3 +135,5 @@ EMAIL_PORT = 587  # פורט TLS
 EMAIL_USE_TLS = True  # השתמש ב-TLS לאבטחה
 EMAIL_HOST_USER = 'communication.ltd001@gmail.com'  # כתובת המייל שלך ב-Gmail
 EMAIL_HOST_PASSWORD = 'stjo bulq lmjd ikvw'  # סיסמת האפליקציה שיצרת
+
+STATICFILES_DIRS = [BASE_DIR / "static"]

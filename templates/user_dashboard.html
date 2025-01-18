@@ -1,35 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>הספרים המועדפים שלך</title>
-</head>
-<body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="{% url 'user_home' %}">Home</a></li>
-                <li><a href="{% url 'logout' %}">Logout</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <h2>הספרים המועדפים שלך</h2>
-        <ul>
-            {% for favorite in favorite_books %}
-                <li>
-                    <strong>{{ favorite.book.title }}</strong> מאת {{ favorite.book.author }}
+{% extends 'base.html' %}
+
+{% block title %}Guest Home{% endblock %}
+
+{% block content %}
+<div class="welcome-section">
+    <h1>Welcome to Homepage Guests</h1>
+
+    <!-- טופס חיפוש -->
+    <form method="GET" action="{% url 'search_books' %}" class="search-form">
+        <label for="search-query" class="search-label">Search for a book:</label>
+        <input type="text" id="search-query" name="q" value="{{ query }}" placeholder="Search by title, author, or genre" class="search-input">
+        <button type="submit" class="button">Search</button>
+    </form>
+
+    <p class="info-text">Browse our books, but log in to manage your favorites!</p>
+
+    <!-- רשימת ספרים -->
+    <h2 class="section-title">Books Available:</h2>
+    {% if books %}
+        <ul class="book-list">
+            {% for book in books %}
+                <li class="book-item">
+                    <a href="{% url 'book_detail' book.book_id %}" class="book-title">{{ book.title }}</a>
                     <br>
-                    נוסף בתאריך: {{ favorite.added_on|date:"d/m/Y H:i" }}
+                    <strong>Author:</strong> {{ book.author }}
+                    <br>
+                    <strong>Genres:</strong>
+                    {% for genre in book.genres.all %}
+                        {{ genre.name }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
                 </li>
-            {% empty %}
-                <li>אין לך ספרים מועדפים כרגע.</li>
             {% endfor %}
         </ul>
-    </main>
-    <footer>
-        <p>&copy; 2025 My Website</p>
-    </footer>
-</body>
-</html>
+    {% else %}
+        <p class="no-books">No books available at the moment. Please check back later.</p>
+    {% endif %}
+
+    <a href="/" class="button">Back to Welcome Page</a>
+</div>
+{% endblock %}

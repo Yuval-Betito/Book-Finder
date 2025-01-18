@@ -1,40 +1,43 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>{{ book.title }} - Book Details</title>
-</head>
-<body>
-    <h1>{{ book.title }}</h1>
+{% extends 'base.html' %}
 
-    <!-- תמונת הספר -->
+{% block title %}{{ book.title }} - Book Details{% endblock %}
+
+{% block content %}
+<h1>{{ book.title }}</h1>
+
+<div class="book-cover">
     {% if book.cover_image_url %}
         <img src="{{ book.cover_image_url }}" alt="{{ book.title }}" style="max-width: 300px; max-height: 400px;">
     {% else %}
         <p><em>No cover image available for this book.</em></p>
     {% endif %}
+</div>
 
-    <!-- פרטי הספר -->
+<div class="book-details">
     <p><strong>Author:</strong> {{ book.author }}</p>
     <p><strong>Description:</strong> {{ book.description }}</p>
     <p><strong>Published Year:</strong> {{ book.published_year }}</p>
     <p><strong>Language:</strong> {{ book.language }}</p>
-    <p><strong>Original Language:</strong> {{ book.original_language }}</p>
     <p><strong>Genres:</strong>
         {% for genre in book.genres.all %}
             {{ genre.name }}{% if not forloop.last %}, {% endif %}
         {% endfor %}
     </p>
+</div>
 
-    <!-- כפתורי מועדפים -->
-    {% if request.user.is_authenticated %}
-        {% if book.book_id in user_favorite_books %}
-            <a href="{% url 'remove_from_favorites' book.book_id %}">Remove from Favorites</a>
-        {% else %}
-            <a href="{% url 'add_to_favorites' book.book_id %}">Add to Favorites</a>
-        {% endif %}
-    {% endif %}
+<!-- וודאי שהתנאי לא יפעיל את הכפתורים לאורחים -->
+<div>
+   {% if user.is_authenticated and not user.is_anonymous %}
+      {% if book.book_id in user_favorite_books %}
+        <a href="{% url 'remove_from_favorites' book.book_id %}">Remove from Favorites</a>
+      {% else %}
+        <a href="{% url 'add_to_favorites' book.book_id %}">Add to Favorites</a>
+      {% endif %}
+{% else %}
+    <p>Please log in to manage favorites.</p>
+{% endif %}
+</div>
 
-    <!-- כפתור חזרה -->
-    <a href="{% url 'user_home' %}">Back to Home</a>
-</body>
-</html>
+<a href="{% if user.is_authenticated %}{% url 'user_home' %}{% else %}{% url 'guest_home' %}{% endif %}" class="button">Back to Home</a>
+{% endblock %}
+
