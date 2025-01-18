@@ -113,10 +113,6 @@ def register(request):
 
 @login_required
 def user_home(request):
-    if request.user.is_staff:
-        # מנהלים מופנים לדשבורד
-        return redirect('admin_dashboard')
-
     # חיפוש ספרים לפי טופס חיפוש
     query = request.GET.get('q', '').strip()
     books = Book.objects.all()  # שאילתת בסיס
@@ -133,9 +129,9 @@ def user_home(request):
 
     return render(request, 'user_home.html', {
         'books': books,
-        'favorite_books': favorite_books
+        'favorite_books': favorite_books,
+        'is_staff': request.user.is_staff  # מוסיפים מידע אם המשתמש מנהל
     })
-
 
 
 
@@ -241,9 +237,44 @@ def remove_from_favorites(request, book_id):
 
     return redirect('user_favorites')
 
+@user_passes_test(lambda u: u.is_staff)  # בדיקה שהמשתמש הוא מנהל
+def admin_dashboard(request):
+    return render(request, 'admin_dashboard.html')  # מפנה לקובץ HTML בשם זה
+
+@user_passes_test(lambda u: u.is_staff)  # רק מנהלים יכולים לגשת
+def manage_users(request):
+    users = User.objects.all()  # שליפת כל המשתמשים מהבסיס נתונים
+
+    if request.method == 'POST':  # אם המנהל מבקש למחוק משתמש
+        user_id = request.POST.get('user_id')
+        user = get_object_or_404(User, id=user_id)
+        user.delete()
+        return redirect('manage_users')
+
+    return render(request, 'manage_users.html', {'users': users})
 
 
+@user_passes_test(lambda u: u.is_staff)
+def admin_reports(request):
+    # מספר המשתמשים שנוספו היום
+    today = now().date()
+    new_users_today = User.objects.filter(date_joined__date=today).count()
 
+    # מספר הספרים שנוספו היום
+    new_books_today = Book.objects.filter(created_at__date=today).count()
+
+    # מספר המשתמשים הכולל
+    total_users = User.objects.count()
+
+    # מספר הספרים הכולל
+    total_books = Book.objects.count()
+
+    return render(request, 'admin_reports.html', {
+        'new_users_today': new_users_today,
+        'new_books_today': new_books_today,
+        'total_users': total_users,
+        'total_books': total_books,
+    })
 
 
 

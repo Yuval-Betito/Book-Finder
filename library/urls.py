@@ -19,5 +19,9 @@ urlpatterns = [
     path('favorites/', views.user_favorites, name='user_favorites'),
     path('books/<int:book_id>/add_to_favorites/', views.add_to_favorites, name='add_to_favorites'),
     path('books/<int:book_id>/remove_from_favorites/', views.remove_from_favorites, name='remove_from_favorites'),
+    path('admin-dashboard/', views.admin_dashboard, name='admin_dashboard'),
+    path('admin-dashboard/manage-users/', views.manage_users, name='manage_users'),
+    path('admin-reports/', views.admin_reports, name='admin_reports'),
+
 
 ]

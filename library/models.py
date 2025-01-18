@@ -6,7 +6,8 @@ class Genre(models.Model):
     name = models.CharField(max_length=100, unique=True)
 
     class Meta:
-        db_table = 'genres'
+        db_table = 'genres'  # שם הטבלה הקיימת
+        managed = False  # Django לא ינסה לנהל את הטבלה
 
     def __str__(self):
         return self.name
@@ -22,6 +23,7 @@ class Book(models.Model):
     cover_image_url = models.URLField(max_length=500, blank=True, null=True)
     original_language = models.CharField(max_length=50, blank=True, null=True)
     genres = models.ManyToManyField(Genre, related_name="books", db_table="bookgenres")
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
 
     class Meta:
         db_table = 'books'

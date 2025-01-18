@@ -36,7 +36,10 @@
 
     <!-- כפתור גישה לספרים מועדפים -->
     <a href="{% url 'user_favorites' %}">Go to Your Favorites Page</a> <!-- קישור לדף הספרים המועדפים -->
-
+     <!-- כפתור גישה לדשבורד המנהלים -->
+    {% if user.is_staff %}
+        <a href="{% url 'admin_dashboard' %}">Go to Admin Dashboard</a>
+    {% endif %}
     <!-- קישור להוספת ספר -->
     <a href="{% url 'add_book' %}">Add a New Book</a>
 
