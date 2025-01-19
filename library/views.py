@@ -6,7 +6,6 @@ import uuid
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth import authenticate, login
-from django.shortcuts import  get_object_or_404
 from django.http import HttpResponseNotFound
 from django.contrib.auth.hashers import make_password
 from django.db.models import Q
@@ -16,6 +15,9 @@ from django.contrib import admin
 from django.db import IntegrityError
 from django.utils.timezone import now
 from datetime import timedelta
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import Book, FavoriteBook, Review ,Genre
+
 
 
 def welcome(request):
@@ -152,18 +154,49 @@ def guest_home(request):
 
 
 def book_detail(request, book_id):
-    # שליפת הספר לפי book_id (לא id)
+    # שליפת הספר לפי book_id
     book = get_object_or_404(Book, book_id=book_id)
 
-    # רשימת ה-IDs של הספרים המועדפים על המשתמש
+    # שליפת רשימת הספרים המועדפים על המשתמש
     user_favorite_books = []
     if request.user.is_authenticated:
         user_favorite_books = FavoriteBook.objects.filter(user=request.user).values_list('book_id', flat=True)
 
+    # שליפת ביקורות על הספר
+    reviews = Review.objects.filter(book=book).order_by('-created_at')
+
+    # טיפול בטופס הביקורת
+    if request.method == 'POST' and request.user.is_authenticated:
+        rating = request.POST.get('rating')
+        review_text = request.POST.get('review_text')
+
+        # בדיקה אם כל הנתונים התקבלו
+        if rating and review_text:
+            try:
+                # יצירת ביקורת חדשה ושמירתה בבסיס הנתונים
+                Review.objects.create(
+                    user=request.user,
+                    book=book,
+                    rating=int(rating),
+                    review_text=review_text.strip()
+                )
+                # הפניה מחדש כדי למנוע שליחה כפולה של הטופס
+                return redirect('book_detail', book_id=book_id)
+            except Exception as e:
+                # במקרים של שגיאה, ניתן להציג הודעה למשתמש
+                print(f"Error saving review: {e}")
+
+    # הצגת תבנית ה-HTML עם הנתונים
     return render(request, 'book_detail.html', {
         'book': book,
         'user_favorite_books': user_favorite_books,
+        'reviews': reviews,
     })
+
+
+
+
+
 
 
 def search_books(request):
@@ -271,8 +304,46 @@ def admin_reports(request):
         'total_books': total_books,
     })
 
+# library/views.py
+from django.shortcuts import render, redirect, get_object_or_404
+from library.models import Book
+from library.forms import BookForm
+from django.contrib.auth.decorators import user_passes_test
+
+@user_passes_test(lambda u: u.is_staff)  # רק מנהלים יכולים לגשת
+def manage_books(request):
+    books = Book.objects.all()  # שליפת כל הספרים
+
+    # מחיקת ספר
+    if request.method == 'POST' and 'delete_book_id' in request.POST:
+        book_id = request.POST.get('delete_book_id')
+        book = get_object_or_404(Book, book_id=book_id)
+        book.delete()
+        return redirect('manage_books')
+
+    return render(request, 'manage_books.html', {'books': books})
 
 
+@user_passes_test(lambda u: u.is_staff)  # רק מנהלים יכולים לגשת
+def edit_book(request, book_id):
+    book = get_object_or_404(Book, book_id=book_id)
+
+    if request.method == 'POST':  # אם הבקשה היא עדכון
+        form = BookForm(request.POST, instance=book)
+        if form.is_valid():
+            form.save()
+            return redirect('manage_books')
+    else:  # הצגת טופס עם הערכים הקיימים של הספר
+        form = BookForm(instance=book)
+
+    return render(request, 'edit_book.html', {'form': form, 'book': book})
+
+
+@user_passes_test(lambda u: u.is_staff)  # רק למנהלים
+def delete_book(request, book_id):
+    book = get_object_or_404(Book, book_id=book_id)
+    book.delete()
+    return redirect('manage_books')
 
 
 

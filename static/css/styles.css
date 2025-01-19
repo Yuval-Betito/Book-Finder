@@ -87,3 +87,47 @@ header {
     background-color: #b678a0;
     transform: scale(1.05);
 }
+.reviews {
+    margin-top: 20px;
+    padding: 10px;
+    border-top: 1px solid #ccc;
+}
+
+.review {
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+}
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: left; /* מוודא שכל התוכן מיושר לשמאל */
+}
+
+.book-list {
+    list-style-type: none; /* ביטול נקודות מהרשימה */
+    padding: 0;
+    margin: 20px auto; /* מרכזת את הרשימה */
+    max-width: 800px; /* מגביל את הרוחב */
+    text-align: left; /* מוודא שהטקסט מיושר לשמאל */
+}
+
+.book-item {
+    margin-bottom: 15px; /* רווח בין הספרים */
+    padding: 10px;
+    border-bottom: 1px solid #ddd; /* קו תחתון בין פריטים */
+}
+
+.book-item a {
+    color: #6d6875;
+    font-weight: bold;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.book-item a:hover {
+    color: #495057; /* צבע הדגשה בקישור */
+}
+
+

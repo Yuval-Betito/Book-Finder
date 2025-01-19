@@ -1,7 +1,7 @@
 from django.urls import path
 from . import views
-
-
+from library.views import  admin_reports
+from library.views import manage_books, edit_book
 urlpatterns = [
     path('', views.welcome, name='welcome'),  # דף Welcome
     path('login/', views.login_view, name='login'),    # דף Login
@@ -19,6 +19,10 @@ urlpatterns = [
     path('admin-dashboard/', views.admin_dashboard, name='admin_dashboard'),
     path('admin-dashboard/manage-users/', views.manage_users, name='manage_users'),
     path('admin-reports/', views.admin_reports, name='admin_reports'),
+    path('admin-reports/', admin_reports, name='admin_reports'),
+    path('manage-books/', manage_books, name='manage_books'),
+    path('edit-book/<int:book_id>/', edit_book, name='edit_book'),
+    path('delete-book/<int:book_id>/', views.delete_book, name='delete_book'),
 
 
 ]

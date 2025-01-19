@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 
+
 class Genre(models.Model):
     genre_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100, unique=True)
@@ -39,7 +40,39 @@ class FavoriteBook(models.Model):
     added_on = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        db_table = 'books_favoritebook'
+        db_table = 'books_favoritebook'  # שם הטבלה בבסיס הנתונים
 
-        def __str__(self):
-            return f"{self.user.username} - {self.book.title}"
+    def __str__(self):
+        return f"{self.user.username} - {self.book.title}"
+
+
+
+
+
+class Review(models.Model):
+    review_id = models.AutoField(primary_key=True)  # תואם לשדה הראשי בטבלה
+    book = models.ForeignKey(
+        'Book',
+        on_delete=models.CASCADE,
+        related_name='reviews',
+        db_column='book_id'  # תואם לשם השדה בבסיס הנתונים
+    )
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='reviews',
+        db_column='user_id'  # תואם לשם השדה בבסיס הנתונים
+    )
+    review_text = models.TextField(null=True, blank=True)  # מתיר ערכים ריקים
+    rating = models.IntegerField(null=True, blank=True)  # מתיר ערכים ריקים
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table = 'reviews'  # שם הטבלה בבסיס הנתונים
+
+    def __str__(self):
+        return f"{self.user.username} - {self.book.title} ({self.rating})"
+
+
+
+
