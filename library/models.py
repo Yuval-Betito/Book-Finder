@@ -7,8 +7,8 @@ class Genre(models.Model):
     name = models.CharField(max_length=100, unique=True)
 
     class Meta:
-        db_table = 'genres'  # שם הטבלה הקיימת
-        managed = False  # Django לא ינסה לנהל את הטבלה
+        db_table = 'genres'
+        managed = False
 
     def __str__(self):
         return self.name
@@ -40,7 +40,7 @@ class FavoriteBook(models.Model):
     added_on = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        db_table = 'books_favoritebook'  # שם הטבלה בבסיס הנתונים
+        db_table = 'books_favoritebook'
 
     def __str__(self):
         return f"{self.user.username} - {self.book.title}"
@@ -50,25 +50,25 @@ class FavoriteBook(models.Model):
 
 
 class Review(models.Model):
-    review_id = models.AutoField(primary_key=True)  # תואם לשדה הראשי בטבלה
+    review_id = models.AutoField(primary_key=True)
     book = models.ForeignKey(
         'Book',
         on_delete=models.CASCADE,
         related_name='reviews',
-        db_column='book_id'  # תואם לשם השדה בבסיס הנתונים
+        db_column='book_id'
     )
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
         related_name='reviews',
-        db_column='user_id'  # תואם לשם השדה בבסיס הנתונים
+        db_column='user_id'
     )
-    review_text = models.TextField(null=True, blank=True)  # מתיר ערכים ריקים
-    rating = models.IntegerField(null=True, blank=True)  # מתיר ערכים ריקים
+    review_text = models.TextField(null=True, blank=True)
+    rating = models.IntegerField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        db_table = 'reviews'  # שם הטבלה בבסיס הנתונים
+        db_table = 'reviews'
 
     def __str__(self):
         return f"{self.user.username} - {self.book.title} ({self.rating})"

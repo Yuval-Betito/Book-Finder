@@ -6,7 +6,7 @@
 <div class="welcome-section">
     <h1>Welcome to Homepage </h1>
 
-    <!-- טופס חיפוש -->
+
     <form method="GET" action="{% url 'search_books' %}" class="search-form">
         <label for="search-query" class="search-label">Search for a book:</label>
         <input type="text" id="search-query" name="q" value="{{ query }}" placeholder="Search by title, author, or genre" class="search-input">
@@ -15,7 +15,7 @@
 
     <p class="info-text">Browse our books, but log in to manage your favorites!</p>
 
-    <!-- רשימת ספרים -->
+
     <h2 class="section-title">Books Available:</h2>
     {% if books %}
         <ul class="book-list">

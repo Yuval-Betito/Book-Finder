@@ -8,14 +8,14 @@ Add a New Book
 <div class="welcome-section">
     <h1>Add a New Book</h1>
 
-    <!-- טופס הוספת ספר -->
+
     <form method="POST">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit" class="button">Add Book</button>
     </form>
 
-    <!-- כפתור חזרה -->
+
     <a href="{% url 'user_home' %}" class="button">Back to Home</a>
 </div>
 {% endblock %}

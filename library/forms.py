@@ -6,7 +6,7 @@ class AddBookForm(forms.ModelForm):
         model = Book
         fields = ['title', 'author', 'description', 'published_year', 'language', 'cover_image_url', 'original_language', 'genres']
         widgets = {
-            'genres': forms.CheckboxSelectMultiple()  # מאפשר למשתמש לבחור מספר ז'אנרים
+            'genres': forms.CheckboxSelectMultiple()
         }
 
 class BookForm(forms.ModelForm):

@@ -102,21 +102,21 @@ header {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
-    text-align: left; /* מוודא שכל התוכן מיושר לשמאל */
+    text-align: left;
 }
 
 .book-list {
-    list-style-type: none; /* ביטול נקודות מהרשימה */
+    list-style-type: none;
     padding: 0;
-    margin: 20px auto; /* מרכזת את הרשימה */
-    max-width: 800px; /* מגביל את הרוחב */
-    text-align: left; /* מוודא שהטקסט מיושר לשמאל */
+    margin: 20px auto;
+    max-width: 800px;
+    text-align: left;
 }
 
 .book-item {
-    margin-bottom: 15px; /* רווח בין הספרים */
+    margin-bottom: 15px;
     padding: 10px;
-    border-bottom: 1px solid #ddd; /* קו תחתון בין פריטים */
+    border-bottom: 1px solid #ddd;
 }
 
 .book-item a {
@@ -127,7 +127,7 @@ header {
 }
 
 .book-item a:hover {
-    color: #495057; /* צבע הדגשה בקישור */
+    color: #495057;
 }
 
 
