@@ -58,7 +58,7 @@ BookFinder aims to simplify and enhance users’ book-search experience by:
 |---------------|--------------|
 | ![User Home](images/user_home.png) | ![Details](images/book_details.png) |
 
-(*החליפי את התמונות בהתאם לאלו שיש לך*)
+
 
 ---
 
