@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<h1>Login</h1>
+
+
+<form class="login-form" method="post">
+    {% csrf_token %}
+
+    <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" class="form-input" required>
+    </div>
+
+    <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" class="form-input" required>
+    </div>
+
+    <button type="submit" class="button">Login</button>
+</form>
+
+
+
+{% if messages %}
+    <ul class="error-messages">
+        {% for message in messages %}
+            <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+<div class="links">
+    <a href="/" class="button">Back to Welcome Page</a>
+    <a href="{% url 'forgot_password' %}" class="button">Forgot Password?</a>
+</div>
+{% endblock %}

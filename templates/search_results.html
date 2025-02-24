@@ -6,31 +6,45 @@
     <h1>Search for Books</h1>
 
 
-    <form method="get" action="{% url 'search_books' %}">
-        <input type="text" name="q" value="{{ query }}" placeholder="Search by title, author, or genre">
-        <button type="submit">Search</button>
-    </form>
+   <form method="get" action="{% url 'search_books' %}">
+    <input type="text" name="q" value="{{ query }}" class="search-input" placeholder="Search by title, author, or genre">
+    <button type="submit" class="button">Search</button>
+</form>
 
-    <h2>Results:</h2>
-    {% if books %}
-        <ul>
+<h2 class="section-title">Search Results:</h2>
+
+{% if books %}
+    <table class="styled-table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Genres</th>
+            </tr>
+        </thead>
+        <tbody>
             {% for book in books %}
-                <li>
-                    <a href="{% url 'book_detail' book.book_id %}">{{ book.title }}</a>
-                    <br>
-                    <strong>Author:</strong> {{ book.author }}<br>
-                    <strong>Genres:</strong>
-                    {% for genre in book.genres.all %}
-                        {{ genre.name }}{% if not forloop.last %}, {% endif %}
-                    {% endfor %}
-                </li>
+                <tr>
+                    <td><a href="{% url 'book_detail' book.book_id %}" class="book-title">{{ book.title }}</a></td>
+                    <td>{{ book.author }}</td>
+                    <td>
+                        {% for genre in book.genres.all %}
+                            {{ genre.name }}{% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                    </td>
+                </tr>
             {% endfor %}
-        </ul>
-    {% else %}
-        <p>No books found matching your query.</p>
-    {% endif %}
+        </tbody>
+    </table>
+{% else %}
+    <p class="no-books">No books found matching your query.</p>
+{% endif %}
 
-    <a href="/">Back to Welcome Page</a>
+<div class="links">
+    <a href="/" class="button">Back to Welcome Page</a>
+</div>
+
+
 {% endblock %}
 
 

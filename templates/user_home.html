@@ -6,46 +6,51 @@
 <div class="welcome-section">
     <h1>Welcome to Homepage</h1>
 
-
     <form method="GET" action="{% url 'search_books' %}" class="search-form">
         <label for="search-query" class="search-label">Search for a book:</label>
         <input type="text" id="search-query" name="q" placeholder="Search by title, author, or genre" class="search-input">
         <button type="submit" class="button">Search</button>
     </form>
 
-
     <h2 class="section-title">Your Books:</h2>
+
     {% if books %}
-        <ul class="book-list">
-            {% for book in books %}
-                <li class="book-item">
-                    <a href="{% url 'book_detail' book.book_id %}" class="book-title">{{ book.title }}</a>
-                    <br>
-                    <strong>Author:</strong> {{ book.author }}
-                    <br>
-                    <strong>Genres:</strong>
-                    {% for genre in book.genres.all %}
-                        {{ genre.name }}{% if not forloop.last %}, {% endif %}
-                    {% endfor %}
-                </li>
-            {% endfor %}
-        </ul>
+        <table class="styled-table">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Genres</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for book in books %}
+                    <tr>
+                        <td><a href="{% url 'book_detail' book.book_id %}" class="book-title">{{ book.title }}</a></td>
+                        <td>{{ book.author }}</td>
+                        <td>
+                            {% for genre in book.genres.all %}
+                                {{ genre.name }}{% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     {% else %}
         <p class="no-books">No books found.</p>
     {% endif %}
 
+    <div class="button-container">
+        <a href="{% url 'user_favorites' %}" class="button">Go to Your Favorites Page</a>
 
-    <a href="{% url 'user_favorites' %}" class="button">Go to Your Favorites Page</a>
+        {% if user.is_staff %}
+            <a href="{% url 'admin_dashboard' %}" class="button">Go to Admin Dashboard</a>
+        {% endif %}
 
-
-    {% if user.is_staff %}
-        <a href="{% url 'admin_dashboard' %}" class="button">Go to Admin Dashboard</a>
-    {% endif %}
-
-
-    <a href="{% url 'add_book' %}" class="button">Add a New Book</a>
-
-
-    <a href="/" class="button">Back to Welcome Page</a>
+        <a href="{% url 'add_book' %}" class="button">Add a New Book</a>
+        <a href="/" class="button">Back to Welcome Page</a>
+    </div>
 </div>
 {% endblock %}
+

@@ -4,20 +4,38 @@
 
 {% block content %}
     <h1>Your Favorite Books</h1>
-    <ul>
-        {% for favorite in favorites %}
-            <li>
-                <strong>{{ favorite.book.title }}</strong> by {{ favorite.book.author }}
-                <br>
-                Added on: {{ favorite.added_on|date:"d/m/Y H:i" }}
-                <br>
-                <a href="{% url 'remove_from_favorites' favorite.book.book_id %}" class="button">Remove from Favorites</a>
-            </li>
-        {% empty %}
-            <li>You don't have any favorite books yet.</li>
-        {% endfor %}
-    </ul>
 
+{% if favorites %}
+    <table class="styled-table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Genres</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for favorite in favorites %}
+                <tr>
+                    <td><a href="{% url 'book_detail' favorite.book.book_id %}" class="book-title">{{ favorite.book.title }}</a></td>
+                    <td>{{ favorite.book.author }}</td>
+                    <td>
+                        {% for genre in favorite.book.genres.all %}
+                            {{ genre.name }}{% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        <a href="{% url 'remove_from_favorites' favorite.book.book_id %}" class="button">Remove</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p class="no-books">You don't have any favorite books yet.</p>
+{% endif %}
 
     <a href="{% url 'user_home' %}" class="button">Back to Home</a>
 {% endblock %}
+

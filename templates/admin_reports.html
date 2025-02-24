@@ -5,11 +5,33 @@
 {% block content %}
 <h1>Admin Reports</h1>
 
-<div class="report-section">
-    <p><strong>New Users Today:</strong> {{ new_users_today }}</p>
-    <p><strong>New Books Today:</strong> {{ new_books_today }}</p>
-    <p><strong>Total Users:</strong> {{ total_users }}</p>
-    <p><strong>Total Books:</strong> {{ total_books }}</p>
+<div class="table-container">
+    <table class="styled-table">
+        <thead>
+            <tr>
+                <th>Report Type</th>
+                <th>Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>New Users Today</td>
+                <td>{{ new_users_today }}</td>
+            </tr>
+            <tr>
+                <td>New Books Today</td>
+                <td>{{ new_books_today }}</td>
+            </tr>
+            <tr>
+                <td>Total Users</td>
+                <td>{{ total_users }}</td>
+            </tr>
+            <tr>
+                <td>Total Books</td>
+                <td>{{ total_books }}</td>
+            </tr>
+        </tbody>
+    </table>
 </div>
 
 <a href="{% url 'admin_dashboard' %}" class="button">Back to Dashboard</a>
